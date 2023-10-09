@@ -1,17 +1,17 @@
 import { useMemo } from "react";
-import { NewsGridStoreContext } from "./modules/newsGrid/store";
-import { NewsGridStore } from "./modules/newsGrid/store/store";
-import NewsGrid from "./modules/newsGrid";
+import { LandingStoreContext } from "./modules/landing/store";
+import { LandingStore } from "./modules/landing/store/store";
+import Landing from "./modules/landing";
 import { Route, Routes } from "react-router-dom";
 export default function App() {
-  const NewsGridStoreValue = useMemo(() => {
-    return NewsGridStore.create({});
+  const LandingStoreValue = useMemo(() => {
+    return LandingStore.create({});
   }, []);
   return (
-    <NewsGridStoreContext.Provider value={NewsGridStoreValue}>
+    <LandingStoreContext.Provider value={LandingStoreValue}>
       <Routes>
-        <Route path="/"  element={<NewsGrid />} />
+        <Route path="/"  element={<Landing />} />
       </Routes>
-    </NewsGridStoreContext.Provider>
+    </LandingStoreContext.Provider>
   );
 }
