@@ -1,0 +1,37 @@
+
+.news-card-list {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .scroll-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
+  }
+  
+  .news-card {
+    color: black;
+    width: 300px; 
+    flex: 0 0 auto;
+    margin-right: 10px; 
+  }
+  
+  .scroll-container::-webkit-scrollbar {
+    height: 10px;
+  }
+  
+  .scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+  
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  

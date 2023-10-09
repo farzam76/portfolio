@@ -1,0 +1,22 @@
+/* Center the card container and add padding on the sides */
+.card-container {
+    width: 100%;
+    height: 100vh;
+   
+    box-sizing: border-box; /* Include padding in the total width */
+  }
+  .card-container div {
+ 
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  /* Style the card */
+  .mesh {
+    background-color: grey; /* Grey background color */
+    border-radius: 5px; /* 5px border radius */
+    
+    box-sizing: border-box; /* Include padding in the total width */
+  }
+  
