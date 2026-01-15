@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { WorkModel } from "../../../../components/WorkModels";
 import { Stars } from "../../../../components/Stars";
+import { useTheme } from "../../../../theme/ThemeContext";
 import { Section, Container, Left, List, ListItem, Right } from "./styles";
 
 const data = [
@@ -15,6 +16,7 @@ const data = [
 
 function WorksComponent() {
   const [work, setWork] = useState("Web Design");
+  const { theme } = useTheme();
 
   return (
     <Section>
@@ -33,11 +35,16 @@ function WorksComponent() {
             <Suspense fallback={null}>
               <ambientLight intensity={0.6} />
               <directionalLight position={[5, 5, 5]} intensity={1} />
-              <pointLight position={[-5, 0, -5]} intensity={0.5} color="#da4ea2" />
-              <spotLight position={[0, 5, 0]} intensity={0.5} color="#8b5cf6" />
+              <pointLight position={[-5, 0, -5]} intensity={0.5} color={theme.colors.primary} />
+              <spotLight position={[0, 5, 0]} intensity={0.5} color={theme.colors.accent} />
 
               {/* Dynamic work model based on selection */}
-              <WorkModel type={work} />
+              <WorkModel
+                type={work}
+                primaryColor={theme.colors.primary}
+                secondaryColor={theme.colors.secondary}
+                accentColor={theme.colors.accent}
+              />
 
               {/* Background stars */}
               <Stars count={1500} radius={0.5} speed={0.25} />

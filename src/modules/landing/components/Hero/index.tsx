@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { AnimatedSphere } from "../../../../components/AnimatedSphere";
 import { Stars } from "../../../../components/Stars";
 import { FloatingShapes } from "../../../../components/FloatingShapes";
+import { useTheme } from "../../../../theme/ThemeContext";
 import {
   Section,
   Container,
@@ -18,6 +19,8 @@ import {
 } from "./styles";
 
 function HeroComponent() {
+  const { theme } = useTheme();
+
   return (
     <Section>
       <Navbar />
@@ -38,13 +41,13 @@ function HeroComponent() {
               <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
               <ambientLight intensity={0.5} />
               <directionalLight position={[5, 5, 5]} intensity={1} />
-              <pointLight position={[-5, -5, -5]} intensity={0.5} color="#da4ea2" />
+              <pointLight position={[-5, -5, -5]} intensity={0.5} color={theme.colors.primary} />
 
               {/* Main animated sphere */}
               <AnimatedSphere
                 position={[0, 0, 0]}
                 scale={2.2}
-                color="#da4ea2"
+                color={theme.colors.primary}
                 distort={0.6}
                 speed={2}
               />
@@ -53,7 +56,11 @@ function HeroComponent() {
               <Stars count={3000} radius={0.8} speed={0.3} />
 
               {/* Floating geometric shapes */}
-              <FloatingShapes />
+              <FloatingShapes
+                primaryColor={theme.colors.primary}
+                secondaryColor={theme.colors.secondary}
+                accentColor={theme.colors.accent}
+              />
             </Suspense>
           </Canvas>
         </Right>
