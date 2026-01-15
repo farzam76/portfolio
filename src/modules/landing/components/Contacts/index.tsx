@@ -1,14 +1,16 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import {Map} from "../index";
 import { Section,Container,Left,Title,Input,Form,TextArea,Button,Right } from "./styles";
 
 function ContactComponent () {
-  const ref = useRef();
-  const [success, setSuccess] = useState(null);
+  const ref = useRef<HTMLFormElement>(null);
+  const [success, setSuccess] = useState<boolean | null>(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!ref.current) return;
 
     emailjs
       .sendForm(
