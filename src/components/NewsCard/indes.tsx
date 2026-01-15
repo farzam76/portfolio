@@ -27,6 +27,7 @@ function NewsCard() {
   const texture = useLoader(THREE.TextureLoader, img);
 
   return (
+    // @ts-ignore - Type incompatibility with react-spring and @react-three/fiber
     <animated.mesh {...spring} {...bind()} castShadow>
       <RoundedBox
         castShadow

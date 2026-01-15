@@ -1,5 +1,4 @@
-import React from "react";
-import { Section,Container,Links,Logo,List,ListItem,Icons,Icon,Button } from "./styles";
+import { Section,Container,Links,List,ListItem,Icons,Button } from "./styles";
 
 function NavbarComponent () {
   return (
