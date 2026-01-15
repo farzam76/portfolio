@@ -6,6 +6,12 @@ A stunning, modern portfolio website featuring immersive 3D animations and inter
 ![Three.js](https://img.shields.io/badge/Three.js-0.157.0-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0.2-blue)
 
+## 🌐 Live Demo
+
+**Coming Soon:** `https://farzam76.github.io/portfolio/`
+
+After enabling GitHub Pages in repository settings, your portfolio will be automatically deployed!
+
 ## 🎨 Features
 
 - **Immersive 3D Animations** - Interactive sphere, cube, and geometric shapes with real-time rendering
@@ -167,15 +173,31 @@ npm run lint
 
 ## 🚢 Deployment
 
-Build the project:
+### GitHub Pages (Automated) ✅
+
+Your portfolio is configured for automatic deployment! See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for complete setup instructions.
+
+**Quick Steps:**
+1. Go to your repo Settings → Pages
+2. Set Source to "GitHub Actions"
+3. Push to your branch
+4. Visit: `https://farzam76.github.io/portfolio/`
+
+### Manual Deployment
+
 ```bash
+# Build the project
 npm run build
+
+# Deploy to GitHub Pages
+npm run deploy
 ```
 
-The `dist/` folder contains the production-ready files. Deploy to:
-- Vercel (recommended)
+### Other Platforms
+
+The `dist/` folder contains production-ready files. You can also deploy to:
+- Vercel
 - Netlify
-- GitHub Pages
 - Any static hosting service
 
 ## 📄 License
