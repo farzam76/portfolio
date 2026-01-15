@@ -5,89 +5,67 @@ export interface ThemeColors {
   background: string;
   text: string;
   textSecondary: string;
+  gradient: string;
+  glow: string;
+  particle: string;
 }
 
 export interface Theme {
   name: string;
   colors: ThemeColors;
+  effects: {
+    blur: string;
+    brightness: string;
+  };
 }
 
-// Default theme
-export const defaultTheme: Theme = {
-  name: "Purple Dream",
+// 🦄 Rainbow Unicorn Theme - Magical, vibrant, dreamy
+export const rainbowUnicorn: Theme = {
+  name: "Rainbow Unicorn 🌈",
   colors: {
-    primary: "#da4ea2",
-    secondary: "#3d1c56",
-    accent: "#ec4899",
-    background: "#0a0a0a",
-    text: "#ffffff",
-    textSecondary: "#d3d3d3",
+    primary: "#FF6B9D",        // Hot pink
+    secondary: "#C364FF",      // Purple
+    accent: "#4ECDC4",         // Cyan
+    background: "#0F0326",     // Deep purple-black
+    text: "#FFFFFF",
+    textSecondary: "#E0B0FF",  // Mauve
+    gradient: "linear-gradient(135deg, #FF6B9D 0%, #C364FF 25%, #4ECDC4 50%, #FFE66D 75%, #FF6B9D 100%)",
+    glow: "#FF6B9D",
+    particle: "#FFE66D",       // Golden yellow
+  },
+  effects: {
+    blur: "blur(20px)",
+    brightness: "brightness(1.2)",
   },
 };
 
-// Additional theme presets
+// 🦄 Cyberpunk Gothic Unicorn Theme - Dark, edgy, neon, mysterious
+export const cyberpunkGothicUnicorn: Theme = {
+  name: "Cyberpunk Gothic 🦄",
+  colors: {
+    primary: "#00FFFF",        // Electric cyan
+    secondary: "#FF00FF",      // Magenta
+    accent: "#39FF14",         // Neon green
+    background: "#0A0015",     // Near black with purple tint
+    text: "#E0E0E0",
+    textSecondary: "#B19CD9",  // Muted purple
+    gradient: "linear-gradient(135deg, #00FFFF 0%, #FF00FF 50%, #39FF14 100%)",
+    glow: "#00FFFF",
+    particle: "#FF00FF",
+  },
+  effects: {
+    blur: "blur(30px)",
+    brightness: "brightness(1.4)",
+  },
+};
+
+// Default theme
+export const defaultTheme: Theme = rainbowUnicorn;
+
+// Only two epic unicorn themes
 export const themes: Record<string, Theme> = {
-  purpleDream: defaultTheme,
-
-  oceanBreeze: {
-    name: "Ocean Breeze",
-    colors: {
-      primary: "#06b6d4",
-      secondary: "#0e7490",
-      accent: "#22d3ee",
-      background: "#0a1929",
-      text: "#ffffff",
-      textSecondary: "#94a3b8",
-    },
-  },
-
-  sunsetGlow: {
-    name: "Sunset Glow",
-    colors: {
-      primary: "#f97316",
-      secondary: "#c2410c",
-      accent: "#fb923c",
-      background: "#1a0b05",
-      text: "#ffffff",
-      textSecondary: "#fcd34d",
-    },
-  },
-
-  forestMist: {
-    name: "Forest Mist",
-    colors: {
-      primary: "#10b981",
-      secondary: "#047857",
-      accent: "#34d399",
-      background: "#0a1f1a",
-      text: "#ffffff",
-      textSecondary: "#a7f3d0",
-    },
-  },
-
-  midnightPurple: {
-    name: "Midnight Purple",
-    colors: {
-      primary: "#8b5cf6",
-      secondary: "#6d28d9",
-      accent: "#a78bfa",
-      background: "#0f0a1a",
-      text: "#ffffff",
-      textSecondary: "#c4b5fd",
-    },
-  },
-
-  crimsonWave: {
-    name: "Crimson Wave",
-    colors: {
-      primary: "#ef4444",
-      secondary: "#991b1b",
-      accent: "#f87171",
-      background: "#1a0505",
-      text: "#ffffff",
-      textSecondary: "#fca5a5",
-    },
-  },
+  rainbowUnicorn,
+  cyberpunkGothicUnicorn,
 };
 
 // Helper function to get theme

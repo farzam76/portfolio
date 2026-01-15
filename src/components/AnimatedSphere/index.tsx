@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Sphere, MeshDistortMaterial, MeshTransmissionMaterial } from "@react-three/drei";
+import { Sphere, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
 interface AnimatedSphereProps {
