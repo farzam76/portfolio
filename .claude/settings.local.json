@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout:*)",
+      "Skill(superpowers:brainstorming)",
+      "Skill(superpowers:brainstorming:*)",
+      "Bash(npm run build:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  }
+}

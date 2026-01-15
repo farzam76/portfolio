@@ -16,26 +16,63 @@ export const Section = styled.div`
   }
 `;
 
+// Full-screen 3D canvas container (background layer)
+export const CanvasContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+`;
+
+// Main 3D showcase area - takes 60-70% of screen in foreground
+export const ThreeDShowcase = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 80vh;
+  z-index: 5;
+  pointer-events: auto;
+
+  canvas {
+    filter: drop-shadow(0 0 100px var(--glow, rgba(255, 107, 157, 0.4)));
+  }
+
+  @media only screen and (max-width: 1200px) {
+    width: 75vw;
+    left: 50%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+  }
+`;
+
 export const Container = styled.div`
   max-width: 1600px;
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 60px;
-  padding: 0 60px;
+  display: flex;
   align-items: center;
-
-  @media only screen and (max-width: 1200px) {
-    grid-template-columns: 1fr 1fr;
-    padding: 0 40px;
-    gap: 40px;
-  }
+  padding: 0 60px;
+  position: relative;
+  z-index: 10;
+  pointer-events: none;
 
   @media only screen and (max-width: 768px) {
-    grid-template-columns: 1fr;
-    padding: 40px 20px;
-    gap: 20px;
+    flex-direction: column-reverse;
+    padding: 20px;
+    justify-content: flex-end;
+    padding-bottom: 60px;
   }
 `;
 
@@ -43,32 +80,46 @@ export const Left = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  z-index: 10;
+  max-width: 500px;
+  pointer-events: auto;
   animation: slideInLeft 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Glass morphism background */
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
   @media only screen and (max-width: 768px) {
     align-items: center;
     text-align: center;
     gap: 20px;
+    max-width: 100%;
+    padding: 30px 20px;
+    margin-top: 20px;
   }
 `;
 
 export const Title = styled.h1`
-  font-size: clamp(3rem, 6vw, 6rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.02em;
   margin: 0;
   position: relative;
 
-  /* Animated gradient text */
+  /* Animated gradient text using CSS variables */
   background: linear-gradient(
     135deg,
-    #FF6B9D 0%,
-    #C364FF 25%,
-    #4ECDC4 50%,
-    #FFE66D 75%,
-    #FF6B9D 100%
+    var(--primary, #FF6B9D) 0%,
+    var(--secondary, #C364FF) 25%,
+    var(--accent, #4ECDC4) 50%,
+    var(--particle, #FFE66D) 75%,
+    var(--primary, #FF6B9D) 100%
   );
   background-size: 300% 300%;
   background-clip: text;
@@ -86,11 +137,11 @@ export const Title = styled.h1`
   }
 
   /* Text glow effect */
-  filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.5))
-          drop-shadow(0 0 60px rgba(195, 100, 255, 0.3));
+  filter: drop-shadow(0 0 30px var(--glow, rgba(255, 107, 157, 0.5)))
+          drop-shadow(0 0 60px var(--secondary, rgba(195, 100, 255, 0.3)));
 
   @media only screen and (max-width: 768px) {
-    font-size: clamp(2.5rem, 10vw, 4rem);
+    font-size: clamp(2rem, 8vw, 3rem);
   }
 `;
 
@@ -104,8 +155,8 @@ export const WhatWeDo = styled.div`
     content: '';
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #FF6B9D, #C364FF);
-    box-shadow: 0 0 10px #FF6B9D;
+    background: linear-gradient(90deg, var(--primary, #FF6B9D), var(--secondary, #C364FF));
+    box-shadow: 0 0 10px var(--primary, #FF6B9D);
     animation: pulse 2s ease-in-out infinite;
   }
 
@@ -117,42 +168,41 @@ export const WhatWeDo = styled.div`
 `;
 
 export const Subtitle = styled.h2`
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   font-weight: 700;
   margin: 0;
-  color: #FF6B9D;
+  color: var(--primary, #FF6B9D);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  text-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+  text-shadow: 0 0 20px var(--glow, rgba(255, 107, 157, 0.6));
 `;
 
 export const Desc = styled.p`
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text, rgba(255, 255, 255, 0.85));
   max-width: 500px;
   font-weight: 400;
   letter-spacing: 0.01em;
 
   @media only screen and (max-width: 768px) {
     max-width: 100%;
-    padding: 0 10px;
   }
 `;
 
 export const Button = styled.button`
-  background: linear-gradient(135deg, #FF6B9D 0%, #C364FF 100%);
+  background: linear-gradient(135deg, var(--primary, #FF6B9D) 0%, var(--secondary, #C364FF) 100%);
   color: white;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 16px 40px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--primary, #FF6B9D) 40%, transparent);
   font-family: 'Orbitron', sans-serif;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -171,8 +221,9 @@ export const Button = styled.button`
 
   &:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(255, 107, 157, 0.6),
-                0 0 40px rgba(195, 100, 255, 0.4);
+    box-shadow:
+      0 12px 35px color-mix(in srgb, var(--primary, #FF6B9D) 60%, transparent),
+      0 0 40px color-mix(in srgb, var(--secondary, #C364FF) 40%, transparent);
   }
 
   &:hover::before {
@@ -185,7 +236,7 @@ export const Button = styled.button`
 
   @media only screen and (max-width: 768px) {
     padding: 14px 32px;
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -201,7 +252,7 @@ export const Right = styled.div`
   /* Add some glow around the canvas */
   canvas {
     border-radius: 20px;
-    filter: drop-shadow(0 0 80px rgba(255, 107, 157, 0.3));
+    filter: drop-shadow(0 0 80px var(--glow, rgba(255, 107, 157, 0.3)));
   }
 
   @media only screen and (max-width: 1200px) {

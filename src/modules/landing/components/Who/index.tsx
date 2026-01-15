@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { AnimatedCube } from "../../../../components/AnimatedCube";
+import { DNAHelix } from "../../../../components/DNAHelix";
 import { Stars } from "../../../../components/Stars";
 import { useTheme } from "../../../../theme/ThemeContext";
 import { Section,Container,Left,Right,Title,WhatWeDo,Subtitle,Desc,Button } from "./styles";
@@ -14,19 +14,25 @@ function WhoComponent() {
     <Section>
       <Container>
         <Left>
-          <Canvas camera={{ position: [0, 0, 7], fov: 50 }}>
+          <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
             <Suspense fallback={null}>
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[3, 2, 1]} intensity={1} />
-              <pointLight position={[-3, -2, -1]} intensity={0.5} color={theme.colors.primary} />
+              <ambientLight intensity={0.4} />
+              <directionalLight position={[5, 5, 5]} intensity={1} color={theme.colors.primary} />
+              <pointLight position={[-5, -5, -5]} intensity={0.6} color={theme.colors.secondary} />
+              <pointLight position={[0, 5, 0]} intensity={0.4} color={theme.colors.accent} />
 
-              {/* Animated cube */}
-              <AnimatedCube position={[0, 0, 0]} scale={1.5} color={theme.colors.accent} />
+              {/* DNA Helix - represents creativity and innovation */}
+              <DNAHelix
+                primaryColor={theme.colors.primary}
+                secondaryColor={theme.colors.secondary}
+                accentColor={theme.colors.accent}
+                scale={0.9}
+              />
 
               {/* Background stars */}
               <Stars count={2000} radius={0.6} speed={0.2} />
 
-              <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
+              <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
             </Suspense>
           </Canvas>
         </Left>
