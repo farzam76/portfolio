@@ -1,9 +1,23 @@
 import React, { useEffect } from "react";
-import { useNewsGridStore } from "../../store";
-import { NewsArticle } from "../../store/store";
 import "./styles.css";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
+
+// Stub types for NewsList component (not currently used)
+interface NewsArticle {
+  top_image: string;
+  site: string;
+  title: string;
+  clean_summary: string;
+  tags: string[];
+  url: string;
+}
+
+// Stub hook for NewsList component (not currently used)
+const useNewsGridStore = () => ({
+  trendingArticles: { data: null as { results: NewsArticle[] } | null },
+  fetchTrendingByCountry: (_params: { countryCode: string }) => {},
+});
 const MockNewsCard = (article: NewsArticle) => {
   const cardBackgroundStyle = {
     background: "#fff",
@@ -31,7 +45,7 @@ const MockNewsCard = (article: NewsArticle) => {
       <h3>{article.title}</h3>
       <p>{article.clean_summary}</p>
       <div className="tags">
-        {article.tags.map((tag, index) => (
+        {article.tags.map((tag: string, index: number) => (
           <span key={index}>{tag}</span>
         ))}
       </div>
@@ -51,7 +65,7 @@ const NewsCardListComponent: React.FC = () => {
   return newsGridStore.trendingArticles.data ? (
     <div className="news-card-list">
       <div className="scroll-container">
-        {newsGridStore.trendingArticles.data?.results.map((news, index) => (
+        {newsGridStore.trendingArticles.data?.results.map((news: NewsArticle, index: number) => (
           <MockNewsCard key={index} {...news} />
         ))}
       </div>

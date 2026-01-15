@@ -1,10 +1,8 @@
-import React from "react";
 import {
   ComposableMap,
   Geographies,
   Geography,
   Annotation,
-  ZoomableGroup
 } from "react-simple-maps";
 
 function MapComponent ()  {
@@ -24,8 +22,8 @@ function MapComponent ()  {
         stroke="#FFFFFF"
         strokeWidth={0.5}
       >
-        {({ geographies }) =>
-          geographies.map((geo) => (
+        {({ geographies }: { geographies: any[] }) =>
+          geographies.map((geo: any) => (
             <Geography key={geo.rsmKey} geography={geo} />
           ))
         }
