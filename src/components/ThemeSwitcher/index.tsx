@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { themes } from "../../theme/config";
+import { useTheme } from "../../theme/ThemeContext";
 
 const SwitcherContainer = styled.div`
   position: fixed;
@@ -9,23 +9,23 @@ const SwitcherContainer = styled.div`
   z-index: 1000;
 `;
 
-const ThemeButton = styled.button`
+const ThemeButton = styled.button<{ $primary: string }>`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid #da4ea2;
-  background: linear-gradient(135deg, #da4ea2 0%, #8b5cf6 100%);
+  border: 2px solid ${(props) => props.$primary};
+  background: linear-gradient(135deg, ${(props) => props.$primary} 0%, #8b5cf6 100%);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(218, 78, 162, 0.4);
+  box-shadow: 0 4px 15px ${(props) => props.$primary}66;
 
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(218, 78, 162, 0.6);
+    box-shadow: 0 6px 20px ${(props) => props.$primary}99;
   }
 
   @media only screen and (max-width: 768px) {
@@ -36,12 +36,12 @@ const ThemeButton = styled.button`
   }
 `;
 
-const ThemeMenu = styled.div<{ $isOpen: boolean }>`
+const ThemeMenu = styled.div<{ $isOpen: boolean; $primary: string }>`
   position: absolute;
   bottom: 70px;
   right: 0;
   background: rgba(10, 10, 10, 0.95);
-  border: 1px solid #da4ea2;
+  border: 1px solid ${(props) => props.$primary};
   border-radius: 10px;
   padding: 15px;
   display: ${(props) => (props.$isOpen ? "flex" : "none")};
@@ -52,17 +52,21 @@ const ThemeMenu = styled.div<{ $isOpen: boolean }>`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 `;
 
-const ThemeOption = styled.button<{ $color: string }>`
+const ThemeOption = styled.button<{ $color: string; $isActive: boolean }>`
   padding: 12px 16px;
   border: 2px solid ${(props) => props.$color};
-  background: linear-gradient(135deg, ${(props) => props.$color}20 0%, transparent 100%);
+  background: ${(props) =>
+    props.$isActive
+      ? `linear-gradient(135deg, ${props.$color}60 0%, ${props.$color}30 100%)`
+      : `linear-gradient(135deg, ${props.$color}20 0%, transparent 100%)`
+  };
   color: white;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: left;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: ${(props) => props.$isActive ? '700' : '500'};
 
   &:hover {
     background: linear-gradient(135deg, ${(props) => props.$color}40 0%, ${(props) => props.$color}20 100%);
@@ -71,46 +75,40 @@ const ThemeOption = styled.button<{ $color: string }>`
   }
 `;
 
-const ThemeLabel = styled.div`
+const ThemeLabel = styled.div<{ $primary: string }>`
   font-size: 12px;
-  color: #da4ea2;
+  color: ${(props) => props.$primary};
   margin-bottom: 5px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
 `;
 
-interface ThemeSwitcherProps {
-  onThemeChange?: (themeName: string) => void;
-}
-
-export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ onThemeChange }) => {
+export const ThemeSwitcher: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme, availableThemes } = useTheme();
 
-  const handleThemeSelect = (themeName: string, color: string) => {
-    // Update CSS variables for dynamic theme switching
-    document.documentElement.style.setProperty('--primary-color', color);
+  const handleThemeSelect = (themeKey: string) => {
+    setTheme(themeKey as keyof typeof availableThemes);
     setIsOpen(false);
-    if (onThemeChange) {
-      onThemeChange(themeName);
-    }
   };
 
   return (
     <SwitcherContainer>
-      <ThemeMenu $isOpen={isOpen}>
-        <ThemeLabel>Choose Theme</ThemeLabel>
-        {Object.entries(themes).map(([key, theme]) => (
+      <ThemeMenu $isOpen={isOpen} $primary={theme.colors.primary}>
+        <ThemeLabel $primary={theme.colors.primary}>Choose Theme</ThemeLabel>
+        {Object.entries(availableThemes).map(([key, themeOption]) => (
           <ThemeOption
             key={key}
-            $color={theme.colors.primary}
-            onClick={() => handleThemeSelect(theme.name, theme.colors.primary)}
+            $color={themeOption.colors.primary}
+            $isActive={theme.name === themeOption.name}
+            onClick={() => handleThemeSelect(key)}
           >
-            {theme.name}
+            {themeOption.name}
           </ThemeOption>
         ))}
       </ThemeMenu>
-      <ThemeButton onClick={() => setIsOpen(!isOpen)}>
+      <ThemeButton $primary={theme.colors.primary} onClick={() => setIsOpen(!isOpen)}>
         🎨
       </ThemeButton>
     </SwitcherContainer>
