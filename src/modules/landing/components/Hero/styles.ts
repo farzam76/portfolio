@@ -16,6 +16,21 @@ export const Section = styled.div`
   }
 `;
 
+export const UniverseBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+`;
+
 export const Container = styled.div`
   max-width: 1600px;
   width: 100%;
