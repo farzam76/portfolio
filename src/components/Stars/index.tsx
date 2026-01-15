@@ -17,6 +17,26 @@ export const Stars: React.FC<StarsProps> = ({
 }) => {
   const pointsRef = useRef<THREE.Points>(null);
 
+  // Create a circular star texture
+  const starTexture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d')!;
+
+    // Create a radial gradient for smooth circular stars
+    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+    gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 32, 32);
+
+    return new THREE.CanvasTexture(canvas);
+  }, []);
+
   const [positions, sizes] = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
@@ -64,6 +84,7 @@ export const Stars: React.FC<StarsProps> = ({
       <pointsMaterial
         size={radius}
         color={color}
+        map={starTexture}
         sizeAttenuation
         transparent
         opacity={0.8}

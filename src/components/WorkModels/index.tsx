@@ -5,9 +5,18 @@ import * as THREE from "three";
 
 interface WorkModelProps {
   type: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
 }
 
-const WebDesignModel: React.FC = () => {
+interface ModelComponentProps {
+  primaryColor: string;
+  secondaryColor: string;
+  accentColor: string;
+}
+
+const WebDesignModel: React.FC<ModelComponentProps> = ({ primaryColor }) => {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -20,7 +29,7 @@ const WebDesignModel: React.FC = () => {
   return (
     <group ref={groupRef}>
       <RoundedBox args={[2.5, 1.8, 0.2]} radius={0.05}>
-        <meshStandardMaterial color="#da4ea2" metalness={0.8} roughness={0.2} />
+        <meshStandardMaterial color={primaryColor} metalness={0.8} roughness={0.2} />
       </RoundedBox>
       <RoundedBox args={[2, 1.3, 0.15]} position={[0, 0, 0.2]}>
         <meshStandardMaterial color="#1a1a1a" />
@@ -29,7 +38,7 @@ const WebDesignModel: React.FC = () => {
   );
 };
 
-const DevelopmentModel: React.FC = () => {
+const DevelopmentModel: React.FC<ModelComponentProps> = ({ primaryColor, secondaryColor }) => {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -42,16 +51,16 @@ const DevelopmentModel: React.FC = () => {
   return (
     <group ref={groupRef}>
       <RoundedBox args={[1.5, 1.5, 1.5]} radius={0.1}>
-        <meshStandardMaterial color="#3d1c56" metalness={0.9} roughness={0.1} />
+        <meshStandardMaterial color={secondaryColor} metalness={0.9} roughness={0.1} />
       </RoundedBox>
       <RoundedBox args={[1.2, 1.2, 1.2]} radius={0.08}>
-        <meshStandardMaterial color="#da4ea2" wireframe />
+        <meshStandardMaterial color={primaryColor} wireframe />
       </RoundedBox>
     </group>
   );
 };
 
-const IllustrationModel: React.FC = () => {
+const IllustrationModel: React.FC<ModelComponentProps> = ({ primaryColor, accentColor }) => {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -64,16 +73,16 @@ const IllustrationModel: React.FC = () => {
   return (
     <group ref={groupRef}>
       <Torus args={[1, 0.4, 16, 100]}>
-        <meshStandardMaterial color="#8b5cf6" metalness={0.8} roughness={0.2} />
+        <meshStandardMaterial color={accentColor} metalness={0.8} roughness={0.2} />
       </Torus>
       <Sphere args={[0.5, 32, 32]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#ec4899" metalness={0.7} roughness={0.3} />
+        <meshStandardMaterial color={primaryColor} metalness={0.7} roughness={0.3} />
       </Sphere>
     </group>
   );
 };
 
-const ProductDesignModel: React.FC = () => {
+const ProductDesignModel: React.FC<ModelComponentProps> = ({ primaryColor }) => {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -86,16 +95,16 @@ const ProductDesignModel: React.FC = () => {
   return (
     <group ref={groupRef}>
       <Cone args={[1, 2, 6]}>
-        <meshStandardMaterial color="#da4ea2" metalness={0.8} roughness={0.2} />
+        <meshStandardMaterial color={primaryColor} metalness={0.8} roughness={0.2} />
       </Cone>
       <Sphere args={[0.4, 32, 32]} position={[0, 1.2, 0]}>
-        <meshStandardMaterial color="#fff" emissive="#da4ea2" emissiveIntensity={0.5} />
+        <meshStandardMaterial color="#fff" emissive={primaryColor} emissiveIntensity={0.5} />
       </Sphere>
     </group>
   );
 };
 
-const SocialMediaModel: React.FC = () => {
+const SocialMediaModel: React.FC<ModelComponentProps> = ({ primaryColor, secondaryColor, accentColor }) => {
   const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -109,36 +118,43 @@ const SocialMediaModel: React.FC = () => {
     <group ref={groupRef}>
       <Sphere args={[1.2, 32, 32]}>
         <meshStandardMaterial
-          color="#3d1c56"
+          color={secondaryColor}
           metalness={0.9}
           roughness={0.1}
-          emissive="#da4ea2"
+          emissive={primaryColor}
           emissiveIntensity={0.2}
         />
       </Sphere>
       <Torus args={[1.5, 0.1, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
-        <meshStandardMaterial color="#da4ea2" metalness={0.8} />
+        <meshStandardMaterial color={primaryColor} metalness={0.8} />
       </Torus>
       <Torus args={[1.5, 0.1, 16, 100]} rotation={[0, Math.PI / 2, 0]}>
-        <meshStandardMaterial color="#ec4899" metalness={0.8} />
+        <meshStandardMaterial color={accentColor} metalness={0.8} />
       </Torus>
     </group>
   );
 };
 
-export const WorkModel: React.FC<WorkModelProps> = ({ type }) => {
+export const WorkModel: React.FC<WorkModelProps> = ({
+  type,
+  primaryColor = "#da4ea2",
+  secondaryColor = "#3d1c56",
+  accentColor = "#8b5cf6",
+}) => {
+  const colors = { primaryColor, secondaryColor, accentColor };
+
   switch (type) {
     case "Web Design":
-      return <WebDesignModel />;
+      return <WebDesignModel {...colors} />;
     case "Development":
-      return <DevelopmentModel />;
+      return <DevelopmentModel {...colors} />;
     case "Illustration":
-      return <IllustrationModel />;
+      return <IllustrationModel {...colors} />;
     case "Product Design":
-      return <ProductDesignModel />;
+      return <ProductDesignModel {...colors} />;
     case "Social Media":
-      return <SocialMediaModel />;
+      return <SocialMediaModel {...colors} />;
     default:
-      return <WebDesignModel />;
+      return <WebDesignModel {...colors} />;
   }
 };

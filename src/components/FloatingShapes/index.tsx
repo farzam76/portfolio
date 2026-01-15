@@ -47,13 +47,23 @@ const FloatingShape: React.FC<FloatingShapeProps> = ({
   );
 };
 
-export const FloatingShapes: React.FC = () => {
+interface FloatingShapesProps {
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+}
+
+export const FloatingShapes: React.FC<FloatingShapesProps> = ({
+  primaryColor = "#da4ea2",
+  secondaryColor = "#3d1c56",
+  accentColor = "#8b5cf6",
+}) => {
   return (
     <>
-      <FloatingShape position={[-3, 2, -5]} color="#da4ea2" speed={0.8} />
-      <FloatingShape position={[4, -1, -8]} color="#3d1c56" speed={1.2} />
-      <FloatingShape position={[-2, -2, -6]} color="#8b5cf6" speed={1} />
-      <FloatingShape position={[3, 3, -7]} color="#ec4899" speed={0.9} />
+      <FloatingShape position={[-3, 2, -5]} color={primaryColor} speed={0.8} />
+      <FloatingShape position={[4, -1, -8]} color={secondaryColor} speed={1.2} />
+      <FloatingShape position={[-2, -2, -6]} color={accentColor} speed={1} />
+      <FloatingShape position={[3, 3, -7]} color={accentColor} speed={0.9} />
     </>
   );
 };
